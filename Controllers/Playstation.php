@@ -21,7 +21,7 @@ class Playstation extends Controller
     public function cari()
     {
         $data['cariberdasarkan'] = $this->request->getPost("cariberdasarkan");
-        $data['yangdicari'] = $this->input->getPost("yangdicari");
+        $data['yangdicari'] = $this->request->getPost("yangdicari");
 
         $cari = $this->ModelPlaystation->cari($data['cariberdasarkan'],  $data['yangdicari']);
 
