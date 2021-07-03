@@ -27,7 +27,7 @@ class Playstation extends Controller
         $cari = $ps->cari($data['cariberdasarkan'],  $data['yangdicari']);
 
         $data["jumlah"] = $cari->countAllResults(false);
-        $data["tampildata"] = $cari->get(null, null, false)->getResultArray();
+        $data["tampildata"] = $cari->get()->getResultArray();
 
         return view("viewtampilbarang", $data);
     }
