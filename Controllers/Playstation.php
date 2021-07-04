@@ -20,12 +20,16 @@ class Playstation extends Controller
 
     public function cari()
     {
-        $data['cariberdasarkan']=$this->input->post("cariberdasarkan");
-        $data['yangdicari']=$this->input->post("yangdicari");
+        $ps = new ModelPlaystation();
+        $data['cariberdasarkan'] = $this->request->getPost("cariberdasarkan");
+        $data['yangdicari'] = $this->request->getPost("yangdicari");
 
-        $data["tampildata"]=$this->ModelPlaystation->cari($data['cariberdasarkan'],  $data['yangdicari']);
-        $data["jumlah"]=count( $data["tampildata"]);
-        $this->load->view("viewtampilbarang", $data);
+        $cari = $ps->cari($data['cariberdasarkan'],  $data['yangdicari']);
+
+        $data["jumlah"] = $cari->countAllResults(false);
+        $data["tampildata"] = $cari->get()->getResultArray();
+
+        return view("viewtampilbarang", $data);
     }
 
     public function formtambahbarang()

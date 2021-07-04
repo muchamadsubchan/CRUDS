@@ -2,14 +2,8 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class ModelPlaystation extends Model
+class ModelPlaystation
 {
-
-    protected $table      = 'barang';
-    protected $primaryKey = 'id';
-
     function __construct()
     {
         $this->db = db_connect();
@@ -23,25 +17,27 @@ class ModelPlaystation extends Model
 
     function cari($cariberdasarkan, $yangdicari)
     {
-        $this->db->table("barang");
+        $query = $this->db->table("barang");
 
         switch($cariberdasarkan){
             case "":
-                $this->db->like('nama', $yangdicari);
-                $this->db->or_like('kode', $yangdicari);
-                $this->db->or_like('jumlah', $yangdicari);
-                $this->db->or_like('harga', $yangdicari);
+                $query = $query
+                    ->like('nama', $yangdicari)
+                    ->orLike('kode', $yangdicari)
+                    ->orLike('jumlah', $yangdicari)
+                    ->orLike('harga', $yangdicari);
                 break;
-                
             case "kode":
-                $this->db->where($cariberdasarkan, $yangdicari);
+                $query = $query->where($cariberdasarkan, $yangdicari);
             case "jumlah":
-                $this->db->where($cariberdasarkan, $yangdicari);
+                $query = $query->where($cariberdasarkan, $yangdicari);
             case "harga":
-                $this->db->where($cariberdasarkan, $yangdicari);
+                $query = $query->where($cariberdasarkan, $yangdicari);
             default:
-                $this->db->like($cariberdasarkan, $yangdicari);
+                $query = $query->like($cariberdasarkan, $yangdicari);
         }
+
+        return $query;
     }
 
     function tampildataadmin()
